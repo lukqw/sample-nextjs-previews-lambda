@@ -1,0 +1,31 @@
+name: Create PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy Preview
+        uses: LocalStack/setup-localstack/preview@main
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          localstack-api-key: ${{ secrets.LOCALSTACK_API_KEY }}
+          preview-cmd: |
+            export AWS_DEFAULT_REGION=eu-central-1
+            cd nextjs-lambda-cdk
+            npm install
+            cd app
+            npm install
+            npm run build
+            cd ..
+            cdklocal bootstrap
+            cdklocal deploy
+            domainName=$(awslocal cloudfront list-distributions | jq -r '.DistributionList.Items[0].Id')
+            echo "Open URL: $AWS_ENDPOINT_URL/cloudfront/$AWS_DEFAULT_REGION/$domainName/"
