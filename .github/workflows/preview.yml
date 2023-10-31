@@ -30,7 +30,7 @@ jobs:
             cdklocal bootstrap
             cdklocal deploy --require-approval never
             domainName=$(awslocal cloudfront list-distributions | jq -r '.DistributionList.Items[0].Id')
-            echo "Open URL: $AWS_ENDPOINT_URL/cloudfront/$AWS_DEFAULT_REGION/$domainName/"
+            echo "Open URL: $AWS_ENDPOINT_URL/cloudfront/$domainName"
 
       - name: Add PR comment
         uses: LocalStack/setup-localstack/finish@main
