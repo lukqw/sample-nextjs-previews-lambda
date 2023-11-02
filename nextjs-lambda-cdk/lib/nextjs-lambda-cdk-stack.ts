@@ -110,8 +110,8 @@ export class NextjsLambdaCdkStack extends Stack {
         sources: [s3deploy.Source.asset('app/.next/static/')],
         destinationBucket: nextBucket,
         destinationKeyPrefix: '_next/static', 
-        // distribution: cloudfrontDistribution,
-        // distributionPaths: ['/_next/static/*']
+        distribution: cloudfrontDistribution,
+        distributionPaths: ['/_next/static/*']
       }
     );
     
@@ -119,8 +119,8 @@ export class NextjsLambdaCdkStack extends Stack {
         sources: [s3deploy.Source.asset('app/public/static/')],
         destinationBucket: nextBucket,
         destinationKeyPrefix: 'static', 
-    //     distribution: cloudfrontDistribution,
-    //     distributionPaths: ['/static/*']
+        distribution: cloudfrontDistribution,
+        distributionPaths: ['/static/*']
       }
     );
   }
