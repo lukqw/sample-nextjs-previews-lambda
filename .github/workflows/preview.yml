@@ -29,11 +29,14 @@ jobs:
             cd ..
             cdklocal bootstrap
             cdklocal deploy --require-approval never
-            domainName=$(awslocal cloudfront list-distributions | jq -r '.DistributionList.Items[0].Id')
-            echo "Open URL: $AWS_ENDPOINT_URL/cloudfront/$domainName"
+            distributionId=$(awslocal cloudfront list-distributions | jq -r '.DistributionList.Items[0].Id')
+            echo "PREVIEW_URL=$AWS_ENDPOINT_URL/cloudfront/$distributionId/" >> $GITHUB_ENV        
+
 
       - name: Add PR comment
         uses: LocalStack/setup-localstack/finish@main
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           include-preview: true
+          preview-url: ${{ env.PREVIEW_URL }}
+
