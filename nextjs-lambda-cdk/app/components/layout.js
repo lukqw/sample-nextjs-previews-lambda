@@ -5,7 +5,7 @@ import Link from 'next/link';
 import styles from './layout.module.css';
 import utilStyles from '../styles/utils.module.css';
 
-const name = 'Next.js applications with Serverless services on AWS';
+const name = 'Next.js applications with Serverless services on LocalStack';
 export const siteTitle = 'Next.js Sample Website';
 
 const Layout = ({ children, home }) => {
@@ -31,8 +31,7 @@ const Layout = ({ children, home }) => {
           <>
             <Image
               priority
-              src="/static/images/landscape.svg"
-              className={utilStyles.borderCircle}
+              src="/static/images/localstack-rocket.svg"
               height={144}
               width={144}
               alt={name}
